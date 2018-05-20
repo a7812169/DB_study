@@ -12,9 +12,6 @@
 # add these directories to sys.path here. If the directory is relative to the
 # documentation root, use os.path.abspath to make it absolute, like shown here.
 #
-import sys
-reload(sys)
-sys.setdefaultencoding('utf8')
 latex_elements={# The paper size ('letterpaper' or 'a4paper').
 'papersize':'a4paper',# The font size ('10pt', '11pt' or '12pt').
 'pointsize':'12pt','classoptions':',oneside','babel':'',#必須

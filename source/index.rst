@@ -7,14 +7,14 @@ Welcome to DB组学习中心!
 ========================================
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 6
    
    py1.rst
    基础.rst
    py+web.rst
    py+数据分析.rst
    py+爬虫.rst
-
+   杂谈.rst
 Indices and tables
 ==================
 
