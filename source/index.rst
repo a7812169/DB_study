@@ -7,7 +7,7 @@ Welcome to DB组学习中心!
 ========================================
 
 .. toctree::
-   :maxdepth: 6
+   :maxdepth: 10
    
    py1.rst
    基础.rst
