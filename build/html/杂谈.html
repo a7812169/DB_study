@@ -89,6 +89,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#id3">常见错误</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#id4">流程</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#id5">好处</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#https">配置https解决方法</a></li>
 </ul>
 </li>
 </ul>
@@ -185,6 +186,19 @@
 <p>这个东西方便就方便在你可以把它看成你个人的博客 虽然比博客确实少了很多的功能 不过单纯的展示和记录的话</p>
 <p>首先不需要你自己去买服务器买域名</p>
 <p>其次使用github和R_T_D 托管后 有新的更新内容 只需要 git push就可以同步的更新内容</p>
+</div>
+<div class="section" id="https">
+<h2>配置https解决方法<a class="headerlink" href="#https" title="永久链接至标题">¶</a></h2>
+<p>一般我们是用到nginx服务器来配置https
+我来讲一下我所知道的nginx服务器配置方法</p>
+<p>首先这是一个非常常见的解决方案 相关的流程阿里云也给出了
+我就讲讲按着流程无法解决的点</p>
+<ol class="arabic simple">
+<li>需要的文件无法下载到linux服务器</li>
+</ol>
+<p><strong>解决方法</strong>
+先把文件下载到自己的电脑上
+如果是Ubuntu的服务器`apt install lrzsz` 然后在nginx下输入`rz`然后就可以把文件传到服务器上了</p>
 </div>
 </div>
 
