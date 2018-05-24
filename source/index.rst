@@ -14,6 +14,7 @@ Welcome to DB组学习中心!
    py+web.rst
    py+数据分析.rst
    py+爬虫.rst
+   入坑爬坑系列.rst
    杂谈.rst
 Indices and tables
 ==================

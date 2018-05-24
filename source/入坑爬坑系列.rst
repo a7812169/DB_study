@@ -1,0 +1,84 @@
+入坑爬坑记
+==============
+nginx系列
+----------
+**18/5/24**
+今天是想做一个 在后端上传图片然后把图片存储到服务器，并且把图片地址存入数据库 以便前端的同学调用接口的时候方便调用
+
+然而这个想当然很简单的东西卡了我半天
+
+这个东西坑不是坑在业务流程上，是服务器这个部分把我坑了好久
+
+坑点
+>>>>>
+
+1.既然我把图片的地址存入了数据库给前端的同学作为调用，那么这个地址得是可以访问的吧。
+  但是我用的flask框架 如果想直接通过url来访问 那么就应该在flask里写视图函数来 通过return的方式 得到图片的地址
+  这就不是我想要的效果了。我想要的是能够直接在url里输入我的服务器里的存放图片的文件夹来取到图片
+
+*解决方法*
+
+一顿搜索后终于找到解决的方法 
+
+在nginx服务器配置里 conf.d里
+:: 
+    server {
+        #监听端口
+        listen      443;
+        #域名可以有多个，用空格隔开
+        server_name qunawang.top;
+        ssl on;
+        ssl_certificate  cert/214438562750086.pem;
+        ssl_certificate_key  cert/214438562750086.key;
+        ssl_session_timeout 5m;
+        ssl_ciphers ECDHE-RSA-AES128-GCM-SHA256:ECDHE:ECDH:AES:HIGH:!NULL:!aNULL:!MD5:!ADH:!RC4;
+        ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
+        ssl_prefer_server_ciphers on;
+        root /home/image/;
+        #对 "/" 启用反向代理
+        *location /image {
+           root /home;
+           access_log   on;
+          autoindex  on;
+          }*
+         location / {
+           #root   html; 
+           #index  index.html index.htm;
+           root root/test/e-newbee;
+           proxy_set_header Host $host;
+           proxy_set_header X-Real-Ip $remote_addr;
+           proxy_set_header X-Forwarded-For $remote_addr;
+           proxy_pass http://120.79.154.232:5000;
+        }    
+      
+    }
+ server {
+    listen       80;
+    server_name  qunawang.top; 
+    return      301 https://$server_name$request_uri;
+ }  
+
+ 这一代码块的意思就是 当访问https：//qunawang.top/image/xxx.jpg 时 他会自动的去找我服务器 home/image 
+ 但是如果 root 后面跟着的是/home/image的话就获取不到想要的图片了
+
+这是第一个坑点
+
+
+第二个坑
+>>>>>>>>
+在flask重定向上的问题，当我把域名配置成https后 如果通过点击事件重定向的跳转 跳转的位置还是原来http的url
+无法正常访问
+
+*解决方法*
+查了一遍发现大概是nginx配置或者重定向的问题
+这里有个比较好的文档https://jiayi.space/post/flaskde-url_forzhong-ding-xiang-wen-ti-he-xiang-ying-yuan-ma-fen-xi
+
+我的解决方式是
+
+::
+ server {
+    listen       80;
+    server_name  qunawang.top; 
+    return      301 https://$server_name$request_uri;
+ }  
+在nginx配置文件里增加了一块代码 把所有发送到http上的请求重定向到https上
